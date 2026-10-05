@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class HotelSystem {
 
-    // Method Overloading 1: Cari berdasarkan Nomor Kamar (String) - Compile-Time Polymorphism
     public static void cariKamar(String noKamar, Kamar[] daftar, int jumlah) {
         System.out.println("\n[Pencarian - String] Mencari kamar dengan Nomor: " + noKamar);
         boolean ditemukan = false;
@@ -20,7 +19,6 @@ public class HotelSystem {
         }
     }
 
-    // Method Overloading 2: Cari berdasarkan Harga Maksimal (double) - Compile-Time Polymorphism
     public static void cariKamar(double hargaMaksimal, Kamar[] daftar, int jumlah) {
         System.out.println("\n[Pencarian - Double] Mencari kamar dengan Harga <= Rp " + hargaMaksimal);
         boolean ditemukan = false;
@@ -36,21 +34,18 @@ public class HotelSystem {
         }
     }
 
-    // Method khusus dengan Parameter Superclass (Kamar) - Demonstrasi Upcasting & Dynamic Binding
     public static void simulasiLayanan(Kamar item) {
         System.out.print("Simulasi Layanan Kamar " + item.getNomorKamar() + " ");
-        item.layananKamar(); // Dynamic Binding mengeksekusi method sesuai wujud asli objek saat runtime
+        item.layananKamar();
     }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         
-        // Polymorphism: Array bertipe Superclass (Kamar[]) menampung berbagai variasi Subclass
         Kamar[] daftarKamar = new Kamar[10];
         int jumlahKamar = 0;
         boolean isRunning = true;
 
-        // Inisialisasi awal 5 Data Objek dengan komposisi 3 Subclass berbeda
         daftarKamar[jumlahKamar++] = new KamarReguler("101", "Standard", 350000, true);
         daftarKamar[jumlahKamar++] = new KamarReguler("102", "Superior", 450000, false);
         daftarKamar[jumlahKamar++] = new KamarSuite("501", "Executive", 1200000, true);
@@ -124,10 +119,8 @@ public class HotelSystem {
                     } else {
                         for (int i = 0; i < jumlahKamar; i++) {
                             System.out.print((i + 1) + ". ");
-                            // Dynamic Binding 1: Pemanggilan method overriding saat perulangan array superclass
                             daftarKamar[i].tampilkanInfo();
-                            
-                            // Dynamic Binding 2: Memanggil method terpisah yang menerima parameter Superclass (Upcasting)
+
                             simulasiLayanan(daftarKamar[i]);
                             System.out.println();
                         }
