@@ -4,8 +4,9 @@ import java.util.Scanner;
 
 public class HotelSystem {
 
+    // Method Overloading 1: Cari berdasarkan Nomor Kamar (String) - Compile-Time Polymorphism
     public static void cariKamar(String noKamar, Kamar[] daftar, int jumlah) {
-        System.out.println("\n[Pencarian] Mencari kamar dengan Nomor: " + noKamar);
+        System.out.println("\n[Pencarian - String] Mencari kamar dengan Nomor: " + noKamar);
         boolean ditemukan = false;
         for (int i = 0; i < jumlah; i++) {
             if (daftar[i].getNomorKamar().equalsIgnoreCase(noKamar)) {
@@ -19,8 +20,9 @@ public class HotelSystem {
         }
     }
 
+    // Method Overloading 2: Cari berdasarkan Harga Maksimal (double) - Compile-Time Polymorphism
     public static void cariKamar(double hargaMaksimal, Kamar[] daftar, int jumlah) {
-        System.out.println("\n[Pencarian] Mencari kamar dengan Harga <= Rp " + hargaMaksimal);
+        System.out.println("\n[Pencarian - Double] Mencari kamar dengan Harga <= Rp " + hargaMaksimal);
         boolean ditemukan = false;
         for (int i = 0; i < jumlah; i++) {
             if (daftar[i].getHargaPerMalam() <= hargaMaksimal) {
@@ -34,17 +36,26 @@ public class HotelSystem {
         }
     }
 
+    // Method khusus dengan Parameter Superclass (Kamar) - Demonstrasi Upcasting & Dynamic Binding
+    public static void simulasiLayanan(Kamar item) {
+        System.out.print("Simulasi Layanan Kamar " + item.getNomorKamar() + " ");
+        item.layananKamar(); // Dynamic Binding mengeksekusi method sesuai wujud asli objek saat runtime
+    }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         
+        // Polymorphism: Array bertipe Superclass (Kamar[]) menampung berbagai variasi Subclass
         Kamar[] daftarKamar = new Kamar[10];
         int jumlahKamar = 0;
         boolean isRunning = true;
 
+        // Inisialisasi awal 5 Data Objek dengan komposisi 3 Subclass berbeda
         daftarKamar[jumlahKamar++] = new KamarReguler("101", "Standard", 350000, true);
         daftarKamar[jumlahKamar++] = new KamarReguler("102", "Superior", 450000, false);
         daftarKamar[jumlahKamar++] = new KamarSuite("501", "Executive", 1200000, true);
         daftarKamar[jumlahKamar++] = new KamarSuite("502", "Presidential", 2500000, true);
+        daftarKamar[jumlahKamar++] = new KamarPenthouse("PH1", "Royal", 5000000, true);
 
         System.out.println("=================================================");
         System.out.println("      SISTEM MANAJEMEN RESERVASI HOTEL           ");
@@ -53,8 +64,8 @@ public class HotelSystem {
         while (isRunning) {
             System.out.println("\nMenu Utama:");
             System.out.println("1. Tambah Data Kamar Baru");
-            System.out.println("2. Tampilkan Seluruh Kamar (Overriding)");
-            System.out.println("3. Cari Kamar (Method Overloading)");
+            System.out.println("2. Tampilkan Seluruh Kamar (Runtime Polymorphism & Dynamic Binding)");
+            System.out.println("3. Cari Kamar (Compile-Time Polymorphism / Overloading)");
             System.out.println("4. Keluar");
             System.out.print("Pilih Menu (1-4): ");
 
@@ -64,10 +75,11 @@ public class HotelSystem {
             switch (pilihan) {
                 case 1:
                     if (jumlahKamar < daftarKamar.length) {
-                        System.out.println("\n--- Pilih Tipe Subclass Kamar ---");
+                        System.out.println("\n--- Pilih Jenis Subclass Kamar ---");
                         System.out.println("1. Kamar Reguler");
                         System.out.println("2. Kamar Suite");
-                        System.out.print("Pilihan (1/2): ");
+                        System.out.println("3. Kamar Penthouse");
+                        System.out.print("Pilihan (1/2/3): ");
                         int jenis = scanner.nextInt();
                         scanner.nextLine();
 
@@ -83,16 +95,20 @@ public class HotelSystem {
                             System.out.print("Apakah ada sarapan? (true/false): ");
                             boolean sarapan = scanner.nextBoolean();
                             scanner.nextLine();
-
                             daftarKamar[jumlahKamar++] = new KamarReguler(nomor, tipe, harga, sarapan);
                             System.out.println("[Sukses] Kamar Reguler berhasil ditambahkan.");
                         } else if (jenis == 2) {
                             System.out.print("Akses Lounge VIP? (true/false): ");
                             boolean lounge = scanner.nextBoolean();
                             scanner.nextLine();
-
                             daftarKamar[jumlahKamar++] = new KamarSuite(nomor, tipe, harga, lounge);
                             System.out.println("[Sukses] Kamar Suite berhasil ditambahkan.");
+                        } else if (jenis == 3) {
+                            System.out.print("Akses Helipad Pribadi? (true/false): ");
+                            boolean helipad = scanner.nextBoolean();
+                            scanner.nextLine();
+                            daftarKamar[jumlahKamar++] = new KamarPenthouse(nomor, tipe, harga, helipad);
+                            System.out.println("[Sukses] Kamar Penthouse berhasil ditambahkan.");
                         } else {
                             System.out.println("[Error] Jenis pilihan kamar tidak valid.");
                         }
@@ -102,14 +118,17 @@ public class HotelSystem {
                     break;
 
                 case 2:
-                    System.out.println("\n--- DAFTAR SELURUH KAMAR HOTEL ---");
+                    System.out.println("\n--- DAFTAR SELURUH KAMAR HOTEL (DYNAMIC BINDING) ---");
                     if (jumlahKamar == 0) {
                         System.out.println("Belum ada data kamar yang tersimpan.");
                     } else {
                         for (int i = 0; i < jumlahKamar; i++) {
                             System.out.print((i + 1) + ". ");
+                            // Dynamic Binding 1: Pemanggilan method overriding saat perulangan array superclass
                             daftarKamar[i].tampilkanInfo();
-                            daftarKamar[i].layananKamar();
+                            
+                            // Dynamic Binding 2: Memanggil method terpisah yang menerima parameter Superclass (Upcasting)
+                            simulasiLayanan(daftarKamar[i]);
                             System.out.println();
                         }
                     }
@@ -119,7 +138,7 @@ public class HotelSystem {
                     break;
 
                 case 3:
-                    System.out.println("\n--- FITUR PENCARIAN (OVERLOADING) ---");
+                    System.out.println("\n--- FITUR PENCARIAN (COMPILE-TIME POLYMORPHISM) ---");
                     System.out.println("1. Cari Berdasarkan Nomor Kamar (String)");
                     System.out.println("2. Cari Berdasarkan Harga Maksimal (double)");
                     System.out.print("Pilih Mode (1/2): ");
