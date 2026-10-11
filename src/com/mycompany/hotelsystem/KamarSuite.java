@@ -1,6 +1,6 @@
 package com.mycompany.hotelsystem;
 
-public class KamarSuite extends Kamar {
+public class KamarSuite extends Kamar implements DapatDipesan, DapatDinilai {
     private boolean adaAksesLoungeVIP;
 
     public KamarSuite(String nomorKamar, String tipeKamar, double hargaPerMalam, boolean adaAksesLoungeVIP) {
@@ -8,12 +8,12 @@ public class KamarSuite extends Kamar {
         this.adaAksesLoungeVIP = adaAksesLoungeVIP;
     }
 
-    public boolean isAdaAksesLoungeVIP() { 
-        return adaAksesLoungeVIP; 
+    public boolean isAdaAksesLoungeVIP() {
+        return adaAksesLoungeVIP;
     }
-    
-    public void setAdaAksesLoungeVIP(boolean adaAksesLoungeVIP) { 
-        this.adaAksesLoungeVIP = adaAksesLoungeVIP; 
+
+    public void setAdaAksesLoungeVIP(boolean adaAksesLoungeVIP) {
+        this.adaAksesLoungeVIP = adaAksesLoungeVIP;
     }
 
     @Override
@@ -26,5 +26,20 @@ public class KamarSuite extends Kamar {
     @Override
     public void layananKamar() {
         System.out.println("-> Layanan: Butler 24 Jam, Jacuzzi Pribadi, & Akses Lounge VIP.");
+    }
+
+    @Override
+    public void hitungDendaKeterlambatan() {
+        System.out.println("   Aturan Denda: Rp 150.000/jam keterlambatan check-out.");
+    }
+
+    @Override
+    public void prosesPemesanan() {
+        System.out.println("   [PROSES PEMESANAN] Kamar Suite berhasil dipesan dengan Deposit 20%.");
+    }
+
+    @Override
+    public void beriRating(int bintang) {
+        System.out.println("   [Ulasan Tamu] Tamu memberikan rating suite ini: " + bintang + " / 5 Bintang.");
     }
 }

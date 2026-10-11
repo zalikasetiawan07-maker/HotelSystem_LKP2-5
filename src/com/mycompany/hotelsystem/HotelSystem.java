@@ -14,9 +14,7 @@ public class HotelSystem {
                 ditemukan = true;
             }
         }
-        if (!ditemukan) {
-            System.out.println("Kamar tidak ditemukan.");
-        }
+        if (!ditemukan) System.out.println("Kamar tidak ditemukan.");
     }
 
     public static void cariKamar(double hargaMaksimal, Kamar[] daftar, int jumlah) {
@@ -29,9 +27,7 @@ public class HotelSystem {
                 ditemukan = true;
             }
         }
-        if (!ditemukan) {
-            System.out.println("Tidak ada kamar yang sesuai batasan harga tersebut.");
-        }
+        if (!ditemukan) System.out.println("Tidak ada kamar yang sesuai batasan harga tersebut.");
     }
 
     public static void simulasiLayanan(Kamar item) {
@@ -53,14 +49,14 @@ public class HotelSystem {
         daftarKamar[jumlahKamar++] = new KamarPenthouse("PH1", "Royal", 5000000, true);
 
         System.out.println("=================================================");
-        System.out.println("      SISTEM MANAJEMEN RESERVASI HOTEL           ");
+        System.out.println("   SISTEM MANAJEMEN HOTEL (MODUL 7 ABSTRAKSI)    ");
         System.out.println("=================================================");
 
         while (isRunning) {
             System.out.println("\nMenu Utama:");
             System.out.println("1. Tambah Data Kamar Baru");
-            System.out.println("2. Tampilkan Seluruh Kamar (Runtime Polymorphism & Dynamic Binding)");
-            System.out.println("3. Cari Kamar (Compile-Time Polymorphism / Overloading)");
+            System.out.println("2. Tampilkan Seluruh Kamar (Abstract & Interface Demo)");
+            System.out.println("3. Cari Kamar (Overloading)");
             System.out.println("4. Keluar");
             System.out.print("Pilih Menu (1-4): ");
 
@@ -105,7 +101,7 @@ public class HotelSystem {
                             daftarKamar[jumlahKamar++] = new KamarPenthouse(nomor, tipe, harga, helipad);
                             System.out.println("[Sukses] Kamar Penthouse berhasil ditambahkan.");
                         } else {
-                            System.out.println("[Error] Jenis pilihan kamar tidak valid.");
+                            System.out.println("[Error] Pilihan jenis kamar tidak valid.");
                         }
                     } else {
                         System.out.println("[Error] Kapasitas sistem kamar penuh!");
@@ -113,25 +109,36 @@ public class HotelSystem {
                     break;
 
                 case 2:
-                    System.out.println("\n--- DAFTAR SELURUH KAMAR HOTEL (DYNAMIC BINDING) ---");
+                    System.out.println("\n--- DAFTAR SELURUH KAMAR (DEMO ABSTRACT & INTERFACE) ---");
                     if (jumlahKamar == 0) {
                         System.out.println("Belum ada data kamar yang tersimpan.");
                     } else {
                         for (int i = 0; i < jumlahKamar; i++) {
                             System.out.print((i + 1) + ". ");
                             daftarKamar[i].tampilkanInfo();
-
                             simulasiLayanan(daftarKamar[i]);
+                            
+                            daftarKamar[i].hitungDendaKeterlambatan();
+
+                            if (daftarKamar[i] instanceof DapatDipesan) {
+                                DapatDipesan itemBisaDipesan = (DapatDipesan) daftarKamar[i];
+                                itemBisaDipesan.prosesPemesanan();
+                            }
+
+                            if (daftarKamar[i] instanceof DapatDinilai) {
+                                DapatDinilai itemBisaDinilai = (DapatDinilai) daftarKamar[i];
+                                itemBisaDinilai.beriRating(5);
+                            }
                             System.out.println();
                         }
                     }
-                    System.out.println("Total Objek Tercipta (Static Counter): " + Kamar.getTotalKamarDibuat());
+                    System.out.println("Total Objek Tercipta: " + Kamar.getTotalKamarDibuat());
                     System.out.print("Tekan Enter untuk melanjutkan...");
                     scanner.nextLine();
                     break;
 
                 case 3:
-                    System.out.println("\n--- FITUR PENCARIAN (COMPILE-TIME POLYMORPHISM) ---");
+                    System.out.println("\n--- FITUR PENCARIAN (OVERLOADING) ---");
                     System.out.println("1. Cari Berdasarkan Nomor Kamar (String)");
                     System.out.println("2. Cari Berdasarkan Harga Maksimal (double)");
                     System.out.print("Pilih Mode (1/2): ");
@@ -161,7 +168,7 @@ public class HotelSystem {
                     break;
 
                 default:
-                    System.out.println("[Error] Pilihan menu tidak valid. Masukkan angka 1-4.");
+                    System.out.println("[Error] Pilihan menu tidak valid.");
             }
         }
 

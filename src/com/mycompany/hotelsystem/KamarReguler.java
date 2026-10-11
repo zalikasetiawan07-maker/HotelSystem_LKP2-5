@@ -1,6 +1,6 @@
 package com.mycompany.hotelsystem;
 
-public class KamarReguler extends Kamar {
+public class KamarReguler extends Kamar implements DapatDipesan {
     private boolean adaSarapan;
 
     public KamarReguler(String nomorKamar, String tipeKamar, double hargaPerMalam, boolean adaSarapan) {
@@ -8,12 +8,12 @@ public class KamarReguler extends Kamar {
         this.adaSarapan = adaSarapan;
     }
 
-    public boolean isAdaSarapan() { 
-        return adaSarapan; 
+    public boolean isAdaSarapan() {
+        return adaSarapan;
     }
-    
-    public void setAdaSarapan(boolean adaSarapan) { 
-        this.adaSarapan = adaSarapan; 
+
+    public void setAdaSarapan(boolean adaSarapan) {
+        this.adaSarapan = adaSarapan;
     }
 
     @Override
@@ -26,5 +26,15 @@ public class KamarReguler extends Kamar {
     @Override
     public void layananKamar() {
         System.out.println("-> Layanan: Wifi gratis & akses kolam renang umum.");
+    }
+
+    @Override
+    public void hitungDendaKeterlambatan() {
+        System.out.println("   Aturan Denda: Rp 50.000/jam keterlambatan check-out.");
+    }
+
+    @Override
+    public void prosesPemesanan() {
+        System.out.println("   [PROSES PEMESANAN] Kamar Reguler berhasil dipesan via Resepsionis/Aplikasi.");
     }
 }

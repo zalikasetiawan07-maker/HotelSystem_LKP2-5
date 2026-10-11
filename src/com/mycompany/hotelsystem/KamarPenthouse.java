@@ -1,6 +1,6 @@
 package com.mycompany.hotelsystem;
 
-public class KamarPenthouse extends Kamar {
+public class KamarPenthouse extends Kamar implements DapatDinilai {
     private boolean adaHelipadAccess;
 
     public KamarPenthouse(String nomorKamar, String tipeKamar, double hargaPerMalam, boolean adaHelipadAccess) {
@@ -26,5 +26,15 @@ public class KamarPenthouse extends Kamar {
     @Override
     public void layananKamar() {
         System.out.println("-> Layanan: Lift Khusus, Private Chef, & Akses Helipad 24 Jam.");
+    }
+
+    @Override
+    public void hitungDendaKeterlambatan() {
+        System.out.println("   Aturan Denda: Rp 500.000/jam keterlambatan check-out.");
+    }
+
+    @Override
+    public void beriRating(int bintang) {
+        System.out.println("   [Ulasan Tamu] VIP Tamu memberikan rating Penthouse ini: " + bintang + " / 5 Bintang.");
     }
 }

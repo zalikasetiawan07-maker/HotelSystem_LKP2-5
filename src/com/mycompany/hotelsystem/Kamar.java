@@ -1,6 +1,6 @@
 package com.mycompany.hotelsystem;
 
-public class Kamar {
+public abstract class Kamar {
     private String nomorKamar;
     private String tipeKamar;
     private double hargaPerMalam;
@@ -14,26 +14,26 @@ public class Kamar {
         totalKamarDibuat++;
     }
 
-    public String getNomorKamar() { 
-        return this.nomorKamar; 
-    }
-    
-    public void setNomorKamar(String nomorKamar) { 
-        this.nomorKamar = nomorKamar; 
+    public String getNomorKamar() {
+        return this.nomorKamar;
     }
 
-    public String getTipeKamar() { 
-        return this.tipeKamar; 
-    }
-    
-    public void setTipeKamar(String tipeKamar) { 
-        this.tipeKamar = tipeKamar; 
+    public void setNomorKamar(String nomorKamar) {
+        this.nomorKamar = nomorKamar;
     }
 
-    public double getHargaPerMalam() { 
-        return this.hargaPerMalam; 
+    public String getTipeKamar() {
+        return this.tipeKamar;
     }
-    
+
+    public void setTipeKamar(String tipeKamar) {
+        this.tipeKamar = tipeKamar;
+    }
+
+    public double getHargaPerMalam() {
+        return this.hargaPerMalam;
+    }
+
     public void setHargaPerMalam(double hargaPerMalam) {
         if (hargaPerMalam > 0) {
             this.hargaPerMalam = hargaPerMalam;
@@ -55,4 +55,6 @@ public class Kamar {
     public void layananKamar() {
         System.out.println("-> Layanan: Pembersihan kamar standar setiap hari.");
     }
+
+    public abstract void hitungDendaKeterlambatan();
 }
