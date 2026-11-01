@@ -3,7 +3,7 @@ package com.mycompany.hotelsystem;
 public class KamarPenthouse extends Kamar implements DapatDinilai {
     private boolean adaHelipadAccess;
 
-    public KamarPenthouse(String nomorKamar, String tipeKamar, double hargaPerMalam, boolean adaHelipadAccess) {
+    public KamarPenthouse(String nomorKamar, String tipeKamar, double hargaPerMalam, boolean adaHelipadAccess) throws Exception {
         super(nomorKamar, tipeKamar, hargaPerMalam);
         this.adaHelipadAccess = adaHelipadAccess;
     }

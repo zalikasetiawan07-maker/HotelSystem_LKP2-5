@@ -4,10 +4,12 @@ public abstract class Kamar {
     private String nomorKamar;
     private String tipeKamar;
     private double hargaPerMalam;
-
     private static int totalKamarDibuat = 0;
 
-    public Kamar(String nomorKamar, String tipeKamar, double hargaPerMalam) {
+    public Kamar(String nomorKamar, String tipeKamar, double hargaPerMalam) throws Exception {
+        if (nomorKamar == null || nomorKamar.trim().isEmpty()) {
+            throw new Exception("Nomor kamar tidak boleh kosong!");
+        }
         this.nomorKamar = nomorKamar;
         this.tipeKamar = tipeKamar;
         setHargaPerMalam(hargaPerMalam);
@@ -34,13 +36,11 @@ public abstract class Kamar {
         return this.hargaPerMalam;
     }
 
-    public void setHargaPerMalam(double hargaPerMalam) {
-        if (hargaPerMalam > 0) {
-            this.hargaPerMalam = hargaPerMalam;
-        } else {
-            System.out.println("[Sistem] Harga tidak valid! Diset ke default Rp 200.000.");
-            this.hargaPerMalam = 200000;
+    public void setHargaPerMalam(double hargaPerMalam) throws Exception {
+        if (hargaPerMalam <= 0) {
+            throw new Exception("Harga per malam harus lebih dari Rp 0!");
         }
+        this.hargaPerMalam = hargaPerMalam;
     }
 
     public static int getTotalKamarDibuat() {
@@ -48,12 +48,12 @@ public abstract class Kamar {
     }
 
     public void tampilkanInfo() {
-        System.out.printf("No Kamar: %-6s | Tipe: %-10s | Harga/Malam: Rp %-10.2f", 
+        System.out.printf("No: %-5s | Tipe: %-8s | Harga: Rp %-9.0f\n", 
             this.nomorKamar, this.tipeKamar, this.hargaPerMalam);
     }
 
     public void layananKamar() {
-        System.out.println("-> Layanan: Pembersihan kamar standar setiap hari.");
+        System.out.println("-> Layanan standar kamar hotel.");
     }
 
     public abstract void hitungDendaKeterlambatan();

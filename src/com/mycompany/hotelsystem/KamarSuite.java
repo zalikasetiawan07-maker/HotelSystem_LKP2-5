@@ -3,7 +3,7 @@ package com.mycompany.hotelsystem;
 public class KamarSuite extends Kamar implements DapatDipesan, DapatDinilai {
     private boolean adaAksesLoungeVIP;
 
-    public KamarSuite(String nomorKamar, String tipeKamar, double hargaPerMalam, boolean adaAksesLoungeVIP) {
+    public KamarSuite(String nomorKamar, String tipeKamar, double hargaPerMalam, boolean adaAksesLoungeVIP) throws Exception {
         super(nomorKamar, tipeKamar, hargaPerMalam);
         this.adaAksesLoungeVIP = adaAksesLoungeVIP;
     }
@@ -18,14 +18,14 @@ public class KamarSuite extends Kamar implements DapatDipesan, DapatDinilai {
 
     @Override
     public void tampilkanInfo() {
-        String vip = adaAksesLoungeVIP ? "Akses Lounge VIP Active" : "No Lounge Access";
-        System.out.printf("[Suite  ] No: %-5s | Tipe: %-8s | Harga: Rp %-9.0f | VIP: %s\n",
+        String vip = adaAksesLoungeVIP ? "Akses VIP Lounge" : "Standard Lounge";
+        System.out.printf("[Suite]   No: %-5s | Tipe: %-8s | Harga: Rp %-9.0f | Fasilitas: %s\n",
             getNomorKamar(), getTipeKamar(), getHargaPerMalam(), vip);
     }
 
     @Override
     public void layananKamar() {
-        System.out.println("-> Layanan: Butler 24 Jam, Jacuzzi Pribadi, & Akses Lounge VIP.");
+        System.out.println("-> Layanan: Personal Butler & Bebas Minuman di VIP Lounge.");
     }
 
     @Override
