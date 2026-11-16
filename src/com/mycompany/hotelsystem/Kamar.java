@@ -1,6 +1,9 @@
 package com.mycompany.hotelsystem;
 
-public abstract class Kamar {
+import java.io.Serializable;
+
+public abstract class Kamar implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String nomorKamar;
     private String tipeKamar;
     private double hargaPerMalam;
@@ -10,9 +13,12 @@ public abstract class Kamar {
         if (nomorKamar == null || nomorKamar.trim().isEmpty()) {
             throw new Exception("Nomor kamar tidak boleh kosong!");
         }
+        if (hargaPerMalam <= 0) {
+            throw new Exception("Harga per malam harus lebih besar dari Rp 0!");
+        }
         this.nomorKamar = nomorKamar;
         this.tipeKamar = tipeKamar;
-        setHargaPerMalam(hargaPerMalam);
+        this.hargaPerMalam = hargaPerMalam;
         totalKamarDibuat++;
     }
 
@@ -36,15 +42,20 @@ public abstract class Kamar {
         return this.hargaPerMalam;
     }
 
-    public void setHargaPerMalam(double hargaPerMalam) throws Exception {
-        if (hargaPerMalam <= 0) {
-            throw new Exception("Harga per malam harus lebih dari Rp 0!");
+    public void setHargaPerMalam(double hargaPerMalam) {
+        if (hargaPerMalam > 0) {
+            this.hargaPerMalam = hargaPerMalam;
+        } else {
+            System.out.println("[Sistem] Harga tidak valid! Tetap menggunakan harga lama.");
         }
-        this.hargaPerMalam = hargaPerMalam;
     }
 
     public static int getTotalKamarDibuat() {
         return totalKamarDibuat;
+    }
+
+    public static void setTotalKamarDibuat(int total) {
+        totalKamarDibuat = total;
     }
 
     public void tampilkanInfo() {

@@ -11,35 +11,42 @@ public class HotelSystem {
         Hotel hotelUnila = new Hotel("Grand Hotel Jakarta");
         hotelUnila.bukaHotel();
 
-        try {
-            hotelUnila.tambahKamar(new KamarReguler("101", "Standard", 350000, true));
-            hotelUnila.tambahKamar(new KamarReguler("102", "Superior", 450000, false));
-            hotelUnila.tambahKamar(new KamarSuite("501", "Executive", 1200000, true));
-            hotelUnila.tambahKamar(new KamarSuite("502", "Presidential", 2500000, true));
-            hotelUnila.tambahKamar(new KamarPenthouse("PH1", "Royal", 5000000, true));
-        } catch (Exception e) {
-            System.out.println("Error Inisialisasi Data Kamar: " + e.getMessage());
+        hotelUnila.muatDataDariFile();
+
+        if (hotelUnila.getJumlahKamar() == 0) {
+            try {
+                hotelUnila.tambahKamar(new KamarReguler("101", "Standard", 350000, true));
+                hotelUnila.tambahKamar(new KamarReguler("102", "Superior", 450000, false));
+                hotelUnila.tambahKamar(new KamarSuite("501", "Executive", 1200000, true));
+                hotelUnila.tambahKamar(new KamarSuite("502", "Presidential", 2500000, true));
+                hotelUnila.tambahKamar(new KamarPenthouse("PH1", "Royal", 5000000, true));
+            } catch (Exception e) {
+                System.out.println("Error Inisialisasi Data Kamar: " + e.getMessage());
+            }
         }
 
-        hotelUnila.tambahTamu(new Tamu("187101001", "Yeni"));
-        hotelUnila.tambahTamu(new Tamu("187101002", "Budi Santoso"));
-        hotelUnila.tambahTamu(new Tamu("187101003", "Agus"));
+        if (hotelUnila.getJumlahTamu() == 0) {
+            hotelUnila.tambahTamu(new Tamu("187101001", "Zalika Setiawan"));
+            hotelUnila.tambahTamu(new Tamu("187101002", "Budi Santoso"));
+            hotelUnila.tambahTamu(new Tamu("187101003", "Haryono"));
+        }
 
         boolean isRunning = true;
 
         System.out.println("\n==========================================================");
-        System.out.println("   SISTEM MANAJEMEN HOTEL (MODUL 10 RELASI ANTAR-OBJECT)  ");
+        System.out.println("  SISTEM MANAJEMEN HOTEL (MODUL 11 FILE I/O & SERIALIZE)  ");
         System.out.println("==========================================================");
 
         while (isRunning) {
             System.out.println("\nMenu Utama:");
             System.out.println("1. Tambah Kamar Baru");
             System.out.println("2. Lihat Seluruh Kamar");
-            System.out.println("3. Cari Kamar (Custom Exception)");
+            System.out.println("3. Cari Kamar");
             System.out.println("4. Manajemen Data Tamu");
-            System.out.println("5. Peminjaman / Reservasi (Demo Association)");
-            System.out.println("6. Keluar");
-            System.out.print("Pilih Menu (1-6): ");
+            System.out.println("5. Reservasi Kamar (Association & Catat Log)");
+            System.out.println("6. Baca File Log Transaksi (Demo File I/O Teks)");
+            System.out.println("7. Simpan & Keluar (Demo Serialization)");
+            System.out.print("Pilih Menu (1-7): ");
 
             try {
                 int pilihan = scanner.nextInt();
@@ -131,7 +138,7 @@ public class HotelSystem {
                         break;
 
                     case 5:
-                        System.out.println("\n--- SISTEM RESERVASI (DEMO ASOSIASI) ---");
+                        System.out.println("\n--- SISTEM RESERVASI (ASOSIASI & CATAT LOG) ---");
                         System.out.print("Masukkan NIK Tamu Peminjam: ");
                         String inputNik = scanner.nextLine();
                         Tamu peminjam = hotelUnila.getTamu(inputNik);
@@ -158,6 +165,14 @@ public class HotelSystem {
                         break;
 
                     case 6:
+                        hotelUnila.bacaLogTransaksi();
+                        System.out.print("Tekan Enter untuk melanjutkan...");
+                        scanner.nextLine();
+                        break;
+
+                    case 7:
+                        System.out.println("\nMenyimpan sesi ke penyimpanan permanen...");
+                        hotelUnila.simpanDataKeFile();
                         System.out.println("Terima kasih telah menggunakan Sistem Manajemen Hotel!");
                         isRunning = false;
                         break;

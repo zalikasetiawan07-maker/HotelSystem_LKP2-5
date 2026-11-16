@@ -1,6 +1,9 @@
 package com.mycompany.hotelsystem;
 
-public class RuangLobby {
+import java.io.Serializable;
+
+public class RuangLobby implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String namaLobby;
     private int kapasitasLounge;
 
